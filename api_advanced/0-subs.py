@@ -7,30 +7,17 @@ import requests
 
 
 def number_of_subscribers(subreddit):
-    """
-    Queries the Reddit API for the number of subscribers for a given subreddit.
+    """DOC"""
+    reddit_url = "https://www.reddit.com/r/{}/about.json" \
+        .format(subreddit)
 
-    Args:
-        subreddit (str): The subreddit to query.
+    header = {'User-agent': 'Mozilla/5.0'}
+    response = requests.get(reddit_url,
+                            headers=header
+                            )
 
-    Returns:
-        int: The number of subscribers for the subreddit,
-    or 0 if the subreddit is invalid.
-    """
-    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
-    headers = {'User-Agent': 'python3:0-subs:v1.0 (by /u/ngabo-dev)'}
-
-    response = requests.get(url, headers=headers, allow_redirects=False)
     if response.status_code == 200:
-        return response.json().get('data', {}).get('subscribers', 0)
-    else:
-        return 0
-
-
-if __name__ == "__main__":
-    import sys
-
-    if len(sys.argv) < 2:
-        print("Please pass an argument for the subreddit to search.")
-    else:
-        print("{:d}".format(number_of_subscribers(sys.argv[1])))
+        data = response.json()['data']
+        subs = data['subscribers']
+        return subs
+    return 0
