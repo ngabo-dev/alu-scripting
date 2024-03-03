@@ -21,9 +21,15 @@ def number_of_subscribers(subreddit):
     headers = {'User-Agent': 'python3:0-subs:v1.0 (by /u/yourusername)'}
 
     response = requests.get(url, headers=headers, allow_redirects=False)
+    print("Response status code:", response.status_code)  # Add this line for debugging
     if response.status_code == 200:
-        return response.json().get('data', {}).get('subscribers', 0)
+        data = response.json().get('data')
+        print("Data received:", data)  # Add this line for debugging
+        subscribers = data.get('subscribers') if data else 0
+        print("Number of subscribers:", subscribers)  # Add this line for debugging
+        return subscribers
     else:
+        print("Failed to fetch data from API")  # Add this line for debugging
         return 0
 
 
