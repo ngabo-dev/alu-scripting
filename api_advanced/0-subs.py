@@ -4,7 +4,7 @@ import requests
 
 
 def number_of_subscribers(subreddit):
-    """DOC"""
+    """DOCUMENTING MODULE"""
     reddit_url = "https://www.reddit.com/r/{subreddit}/about.json"
         .format(subreddit)
 
